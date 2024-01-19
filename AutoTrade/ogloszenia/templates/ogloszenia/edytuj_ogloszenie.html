@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<style type="text/css">
+   .create-form {
+	    width: 100%;
+	    max-width: 100%;
+	    padding: 15px;
+	    margin: auto;
+  	}
+
+  	.submit-button{
+  		max-width: 200px;
+  	}
+
+	.image {
+	  opacity: 1;
+	  transition: .5s ease;
+	  backface-visibility: hidden;
+	}
+
+	.middle {
+	  transition: .5s ease;
+	  opacity: 0;
+	  position: absolute;
+	  text-align: center;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	
+	}
+	.image-group{
+		position: relative;
+  		text-align: center;
+  		cursor:pointer;
+	}
+
+	.image-group:hover .image {
+	  opacity: 0.3;
+	}
+
+	.image-group:hover .middle {
+	  opacity: 1;
+	}
+
+	.text {
+	  margin: auto;
+	  background-color: #4CAF50;
+	  color: white;
+	  font-size: 15px;
+	  padding: 15px;
+	}
+</style>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-7 offset-lg-1">
+
+			{% if success_message %}
+				<h3 style="color:green; text-align: center;">{{success_message}}</h3>
+			{% endif %}
+
+			<form class="create-form" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+				<!-- title -->
+				<div class="form-group">
+					<label for="id_title">Tytuł</label>
+					<input class="form-control" type="text" name="tytul" id="id_title" placeholder="Title" value="{{form.initial.tytul}}" required autofocus>
+				</div>
+
+				<!-- Body -->
+				<div class="form-group">
+					<label for="id_body">Opis</label>
+					<textarea class="form-control" rows="1" type="text" name="opis" id="id_opis" placeholder="Opis" required>{{form.initial.opis}}</textarea>
+				</div>
+
+				<div class="form-group">
+					<label for="id_cena">Cena</label>
+					<input class="form-control" type="text" name="cena" id="id_cena" placeholder="Cena" value="{{form.initial.cena}}" required>
+				</div>
+				<div class="form-group">
+					<label for="id_nrTelefonu">Nr Telefonu</label>
+					<input class="form-control" type="text" name="nrTelefonu" id="id_nrTelefonu" placeholder="Nr Telefonu" value="{{form.initial.nrTelefonu}}" required>
+				</div>
+				<div class="form-group">
+					<label for="id_markaPojazdu">Marka Pojazdu</label>
+					<input class="form-control" type="text" name="markaPojazdu" id="id_markaPojazdu" placeholder="Marka Pojazdu" value="{{form.initial.markaPojazdu}}" required>
+				</div>
+				<div class="form-group">
+					<label for="id_modelPojazdu">Model Pojazdu</label>
+					<input class="form-control" type="text" name="modelPojazdu" id="id_modelPojazdu" placeholder="Model Pojazdu" value="{{form.initial.modelPojazdu}}" required>
+				</div>
+				<div class="form-group">
+					<label for="id_rokProdukcji">Rok Produkcji</label>
+					<input class="form-control" type="text" name="rokProdukcji" id="id_rokProdukcji" placeholder="Rok Produkcji" value="{{form.initial.rokProdukcji}}" required>
+				</div>
+				<div class="form-group">
+					<label for="id_pojemnoscSilnika">Pojemność Silnika</label>
+					<input class="form-control" type="text" name="pojemnoscSilnika" id="id_pojemnoscSilnika" placeholder="Pojemność Silnika" value="{{form.initial.pojemnoscSilnika}}" required>
+				</div>
+				<p>Dla typu silnika: D(Diesel), B(Benzyna), E(Elektryk), H(Hybryda)</p>
+				<div class="form-group">
+					<label for="id_typSilnika">Typ Silnika</label>
+					<input class="form-control" type="text" name="typSilnika" id="id_typSilnika" placeholder="Typ Silnika" value="{{form.initial.typSilnika}}" required>
+				</div>
+				<div class="form-group">
+					<label for="id_lokalizacja">Lokalizacja</label>
+					<input class="form-control" type="text" name="lokalizacja" id="id_lokalizacja" placeholder="Lokalizacja" value="{{form.initial.lokalizacja}}" required>
+				</div>
+
+				</div>
+
+
+
+				<!-- Image -->
+				<div class="form-group image-group" id="id_image_group">
+					<img class="img-fluid image" src="{{form.initial.zdjecie.url}}" id="id_image_display">
+					  <div class="middle">
+					    <div class="text">Zmień zdjęcie</div>
+					  </div>
+				</div>
+				<input type="file" name="zdjecie" id="id_image_file" accept="zdjecie/*" onchange="readURL(this)">
+				
+
+				{% for field in form %}
+					<p>
+						{% for error in field.errors %}
+							<p style="color: red">{{ error }}</p>
+						{% endfor %}
+					</p>
+				{% endfor %}
+				{% if form.non_field_errors %}
+					<div style="color: red">
+						<p>{{form.non_field_errors}}</p>
+					</div>
+				{% endif %}
+
+				<!-- Submit btn -->
+				<button class="submit-button btn btn-lg btn-primary btn-block" type="submit">Zaaktualizuj</button>
+			</form>	
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	document.getElementById('id_image_group').onclick = function(event){
+    	document.getElementById('id_image_file').click();
+    };
+
+	function readURL(input){
+		var reader = new FileReader();
+		reader.onload = function (e) {
+            $('#id_image_display')
+                .attr('src', e.target.result)
+        };
+		reader.readAsDataURL(input.files[0]);
+	}
+</script>
+
+{% endblock content %}

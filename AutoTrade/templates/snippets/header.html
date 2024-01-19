@@ -1,0 +1,93 @@
+{% load static %}
+<style type="text/css">
+    body {
+        background-color: var(--bs-body-bg); /* Set a default background color for the body */
+        margin: 0; /* Remove default body margin */
+    }
+
+    .header-container {
+        background-color: white;
+    }
+
+    
+    .container {
+      max-width: 960px;
+    }
+    
+    .search-bar{
+        padding-right: 50px;
+        max-width: 1000px;
+        width: 100%;
+    }
+    form{
+        width: 100%;
+    }
+  
+    </style>
+    <div class="header-container d-flex flex-column flex-md-row justify-content-between align-items-center pb-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+          <img class="img-fluid mx-auto d-block"src="{% static 'logo.png' %}" width="90" height="90">
+      </a>
+
+      <nav class="d-flex mt-2 mt-md-0 ms-md-auto">
+          {% if request.user.is_authenticated %}
+          <div class="search-bar mt-sm-2 ml-sm-2"> <!-- Zmiana mr-2 na ml-sm-2 -->
+            <form method="get">
+                <input type="text" class="form-control" name="q" id="iq_q" placeholder="Szukaj...">
+            </form>
+            </div>
+          <div class="d-flex align-items-center">
+
+            
+        <body>
+              <div class="me-3">
+                  <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'home' %}">Home</a>
+              </div>
+              <div class="me-3">
+                  <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'account' %}">Konto</a>
+              </div>
+              <div class="me-3">
+                  <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'logout' %}">Wyloguj</a>
+              </div>
+              <div>
+                  <p class="mb-0">Cześć, {{request.user.username}}</p>
+              </div>
+        </body>
+          </div>
+          {% else %}
+          <div class="d-flex align-items-center">
+              <div class="me-3">
+                  <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'home' %}">Home</a>
+              </div>
+              <div class="me-3">
+                  <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'register' %}">Zarejestruj się</a>
+              </div>
+              <div>
+                  <a class="py-2 link-body-emphasis text-decoration-none" href="{% url 'login' %}">Zaloguj się</a>
+              </div>
+          </div>
+          {% endif %}
+      </nav>
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById("id_q").value = "{{query}}"
+    </script>
+
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<!-- 
+{% if request.user.is_authenticated %}
+    <p>
+        <a href="{% url 'home' %}">Home</a> |
+        <a href="{% url 'account' %}">Konto</a> | 
+        <a href="{% url 'logout' %}"> Wyloguj</a></p>
+    <p>Cześć, {{request.user.username}}</p>
+{% else %}
+    <p>
+        <a href="{% url 'home' %}">Home</a> |
+        <a href="{% url 'register' %}">Zarejestruj się</a> | 
+        <a href="{% url 'login' %}">Zaloguj się</a>
+    </p>
+{% endif %} -->

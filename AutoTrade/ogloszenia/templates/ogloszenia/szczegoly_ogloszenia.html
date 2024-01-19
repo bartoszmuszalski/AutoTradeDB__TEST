@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style type="text/css">
+
+    .card{
+        max-width: 700px;
+    }
+    .container{
+        padding: 20px;
+    }
+
+
+</style>
+
+<!-- OPIS PRZYJMUJE -->
+<div class="container">
+    <div class="row">
+        <div class="card m-auto">
+            <img class="card-img-top" src="{{zamieszczanie_ogloszen.zdjecie.url}}" alt="{{zamieszczanie_ogloszen.tytul}}">
+            <div class="card-body my-2">
+                <h2 class="card-title">{{zamieszczanie_ogloszen.tytul}}</h2>
+                <p class="card-text">{{zamieszczanie_ogloszen.opis|safe}}</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Cena: {{zamieszczanie_ogloszen.cena|safe}} PLN</li>
+                    <li class="list-group-item">Marka i model: {{zamieszczanie_ogloszen.tytul}}</li>
+                    <li class="list-group-item">Rok produkcji: {{zamieszczanie_ogloszen.rokProdukcji}}</li>
+                    <li class="list-group-item">Pojemność silnika: {{zamieszczanie_ogloszen.pojemnoscSilnika}} L</li>
+                    <li class="list-group-item">Typ silnika: {{zamieszczanie_ogloszen.get_typSilnika_display}}</li>
+                    <li class="list-group-item">Lokalizacja: {{zamieszczanie_ogloszen.lokalizacja}}, Polska</li>
+                    <li class="list-group-item">Numer telefonu: +48 {{zamieszczanie_ogloszen.nrTelefonu}}</li>
+                    {% if zamieszczanie_ogloszen.autor == request.user %}
+                        <a href="{% url 'ogloszenia:edytuj' zamieszczanie_ogloszen.slug %}" class="btn btn-primary">Aktualizuj</a>
+
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="card-footer text-muted">
+                Zaaktualizowane dnia {{zamieszczanie_ogloszen.dataAktualizacji|date:"F j, Y H:i"}} przez
+                {{zamieszczanie_ogloszen.autor}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

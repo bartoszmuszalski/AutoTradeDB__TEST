@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>AutoTrade - Sprzedaż Samochodów</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+{% block content %}
+
+{% endblock content %}
+
+    <header>
+        <h1>AutoTrade</h1>
+        <p>Twoje miejsce na zakup i sprzedaż samochodów</p>
+    </header>
+
+    <main>
+        <section class="car-listing">
+            <h2>Dostępne oferty</h2>
+            <!-- Tutaj można umieścić listę ofert samochodów -->
+            <div class="car">
+                <h3>Ford Mustang</h3>
+                {% load static %} 
+                <img src="{% static 'images\car1.jpg' %}" alt="Samochód 1", width="200", height="200">
+                <p>Rok produkcji: 2024</p>
+                <p>Cena: 300 000 zł</p>
+            </div>
+            <div class="car">
+                <h3>Tesla Model S</h3>
+                <img src="{% static 'images\car2.jpg' %}" alt="Samochód 2", width="200", height="200">
+                <p>Rok produkcji: 2020</p>
+                <p>Cena: 200 000 zł</p>
+            </div>
+            <!-- Dodaj więcej ofert samochodów według potrzeb -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AutoTrade - Wszelkie prawa zastrzeżone</p>
+    </footer>
+
+</body>
+</html>

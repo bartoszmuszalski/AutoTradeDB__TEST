@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<style type="text/css">
+    html,
+    body {
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    /* background-image: linear-gradient(180deg, var(--bs-secondary-bg), #1E90FF 100px, var(--bs-body-bg)); */
+}
+
+    .form-signin {
+            max-width: 500px;
+            padding: 1rem;
+            margin: auto;
+            background-color: white; /* Dodaj białe tło dla formularza */
+            border-radius: 10px; /* Dodaj zaokrąglenie krawędzi dla estetyki */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-signin .form-floating:focus-within {
+    z-index: 2;
+    }
+
+    .form-signin input[type="email"] {
+    margin-bottom: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="text"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+    margin-bottom: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    }
+    .h2{
+        text-align: center;
+    }
+</style>
+
+<form method="post" class="form-signin">
+    <img class="img-fluid mx-auto d-block"src="{% static 'logo.png' %}" width="150" height="150">
+    <h1 class="h2 mb-3 fw-normal">Rejestracja</h1>
+
+    <div class="form-floating"> {% csrf_token %}
+        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" autofocus>
+        <label for="floatingInput">Adres e-mail</label>
+    </div>
+
+    <div class="form-floating">
+        <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Użytkownik">
+        <label for="floatingPassword">Użytkownik</label>
+    </div>
+
+    <div class="form-floating">
+        <input type="password" name="password1" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Hasło</label>
+    </div>
+
+    <div class="form-floating">
+        <input type="password" name="password2" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Powtórz hasło</label>
+    </div>
+        {% for field in registration_form %}
+            {% for error in field.errors %}
+                <p style="color: red;">{{error}}</p>
+            {% endfor %}
+        {% endfor %}
+
+        {% if registration_form.non_field_errors %}
+            <div style="color: red;">
+                <p>{{registration_form.non_field_errors}}</p>
+            </div>
+        {% endif %}
+
+
+    <button class="btn btn-primary w-100 py-2" type="submit">Zarejestruj się</button>
+</form>
+<!-- <form method="post">{% csrf_token %}
+    {% for field in registration_form %}
+        <p>
+            {{field.label_tag}}
+            {{field}}
+            
+            {% if field.help_text %}
+                <small style="color: grey;">{{field.help_text}}</small>
+            {% endif %}
+
+            {% for error in field.errors %}
+                <p style="color: red;">{{error}}</p>
+            {% endfor %}
+        </p>
+    {% endfor %}
+    <button type="submit">Zarejestruj się</button>
+
+
+</form> -->
+
+{% endblock content %}

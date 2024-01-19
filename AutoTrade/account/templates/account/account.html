@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+<style type="text/css">
+    html,
+    body {
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: #6495ED; /* Ustaw kolor tła */
+}
+
+    .form-signin {
+            max-width: 500px;
+            padding: 1rem;
+            margin: auto;
+            background-color: white; /* Dodaj białe tło dla formularza */
+            border-radius: 10px; /* Dodaj zaokrąglenie krawędzi dla estetyki */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-signin .form-floating:focus-within {
+    z-index: 2;
+    }
+
+    .form-signin input[type="email"] {
+    margin-bottom: 10px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="username"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    }
+    .h2{
+        text-align: center;
+    }
+    .widok-ogloszen{
+        max-width: 500px;
+        width: 100%;
+        margin: auto;
+    }
+
+</style>
+
+<form method="post" class="form-signin">
+    <img class="img-fluid mx-auto d-block"src="{% static 'logo.png' %}" width="150" height="150">
+    <h1 class="h2 mb-3 fw-normal">Konto</h1>
+
+    <div class="form-floating"> {% csrf_token %}
+        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com" value={{account_form.initial.email}}>
+        <label for="floatingInput">Adres e-mail</label>
+    </div>
+    <div class="form-floating">
+        <input type="text" name="username" class="form-control" id="inputUsername" placeholder="Użytkownik" value={{account_form.initial.username}}>
+        <label for="floatingPassword">Hasło</label>
+    </div>
+        {% for field in account_form %}
+            {% for error in field.errors %}
+                <p style="color: red;">{{error}}</p>
+            {% endfor %}
+        {% endfor %}
+
+        {% if account_form.non_field_errors %}
+            <div style="color: red;">
+                <p>{{account_form.non_field_errors}}</p>
+            </div>
+        {% endif %}
+
+    {% if success_message %}
+        <p style="color:green; text-align: center;">{{success_message}}</p>
+    {% endif %}
+    <button class="btn btn-primary w-100 py-2" type="submit">Zapisz zmiany</button>
+
+</form>
+
+<div class="d-flex flex-colum">
+    <a class="m-auto" href="{% url 'password_change' %}">Zmień hasło</a>
+</div>
+
+<div class="container" mt-4 p-4>
+    <div class="row">
+        <div class="widok-ogloszen">
+            <h3 class="mb-3 font-weight-normal">Ogloszenia:</h3>
+            {% if aktywne_ogloszenia %}
+            <ul class="list-group">
+                {% for ogloszenie in aktywne_ogloszenia %}
+                    <a href="{% url 'ogloszenia:szczegoly' ogloszenie.slug %}" style="text-decoration: none;">
+                        <li class="list-group-item">{{ogloszenie}}</li></a>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p>Nie masz żadnych postów. Stwórz post <a href="{% url 'ogloszenia:dodaj' %}">Tutaj</a></p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- 5 MINUTA SKONCZYLERM -->
+{% endblock content %}

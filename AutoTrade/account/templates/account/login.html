@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+{% block content %}
+<style type="text/css">
+    html,
+    body {
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+}
+
+    .form-signin {
+            max-width: 500px;
+            padding: 1rem;
+            margin: auto;
+            background-color: white; /* Dodaj białe tło dla formularza */
+            border-radius: 10px; /* Dodaj zaokrąglenie krawędzi dla estetyki */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-signin .form-floating:focus-within {
+    z-index: 2;
+    }
+
+    .form-signin input[type="email"] {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    }
+    .h2{
+        text-align: center;
+    }
+</style>
+
+<form method="post" class="form-signin">
+    <div class="d-flex flex-colum pb-3">
+        <img class="img-fluid mx-auto d-block"src="{% static 'logo.png' %}" width="150" height="150">
+
+    </div>
+    <h1 class="h2 mb-3 fw-normal">Zaloguj się</h1>
+
+    <div class="form-floating"> {% csrf_token %}
+        <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Adres e-mail</label>
+    </div>
+    <div class="form-floating">
+        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Hasło</label>
+    </div>
+        {% for field in login_form %}
+            {% for error in field.errors %}
+                <p style="color: red;">{{error}}</p>
+            {% endfor %}
+        {% endfor %}
+
+        {% if login_form.non_field_errors %}
+            <div style="color: red;">
+                <p>{{login_form.non_field_errors}}</p>
+            </div>
+        {% endif %}
+
+    <button class="btn btn-primary w-100 py-2" type="submit">Zaloguj się</button>
+</form>
+
+<div class="d-flex flex-colum">
+    <a class="m-auto" href="{% url 'password_reset' %}">Resetuj hasło</a>
+</div>
+
+{% endblock content %}

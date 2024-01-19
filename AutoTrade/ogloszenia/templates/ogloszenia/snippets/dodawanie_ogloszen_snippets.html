@@ -1,0 +1,56 @@
+<style type="text/css">
+	.card{
+		max-width: 700px;
+		width: 100%;
+	}
+	.card-body{
+		padding: 20px;
+		width: 100%;
+	}
+	h4{
+		font-weight: lighter;
+	}
+</style>
+{% if zamieszczanie_ogloszen %}
+<div class="container">
+	<div class="row">
+
+
+		<!-- Blog Post -->
+		<div class="card m-auto">
+			<a href="{% url 'ogloszenia:szczegoly' zamieszczanie_ogloszen.slug %}">
+				<img class="card-img-top" src="{{zamieszczanie_ogloszen.zdjecie.url}}">
+			</a>
+			
+			<div class="card-body mt-2 mb-2">
+				<a href="{% url 'ogloszenia:szczegoly' zamieszczanie_ogloszen.slug %}">
+					<h2 class="card-title">{{zamieszczanie_ogloszen.tytul}}</h2>			
+				</a>
+				<p class="card-text">Cena: {{zamieszczanie_ogloszen.cena|safe|truncatechars:180}} PLN </p>
+				{% if zamieszczanie_ogloszen.autor == request.user %}
+					<a href="{% url 'ogloszenia:edytuj' zamieszczanie_ogloszen.slug %}" class="btn btn-primary">Aktualizuj</a>
+				{% endif %}
+			</div>
+			<div class="card-footer text-muted">
+                Zaaktualizowane dnia {{zamieszczanie_ogloszen.dataAktualizacji|date:"F j, Y H:i"}} przez
+                {{zamieszczanie_ogloszen.autor}}
+			</div>
+
+		</div>
+	</div>
+</div>
+{% else %}
+<div class="container">
+	<div class="row">
+		<div class="card m-auto">
+			<div class="card-body mt-2 mb-2">
+				<h2 class="card-title">
+					Brak rezultatów
+					<h4 class="card-text">Nie znaleziono żadnych rekordów podobnych do twojego wyszukania: "{{query}}".</h4>
+				</h2>
+			</div>
+		</div>
+	</div>
+
+</div>
+{% endif %}
