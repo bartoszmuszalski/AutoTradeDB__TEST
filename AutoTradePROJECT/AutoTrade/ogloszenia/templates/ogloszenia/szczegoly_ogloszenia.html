@@ -31,6 +31,8 @@
                     <li class="list-group-item">Numer telefonu: +48 {{zamieszczanie_ogloszen.nrTelefonu}}</li>
                     {% if zamieszczanie_ogloszen.autor == request.user %}
                         <a href="{% url 'ogloszenia:edytuj' zamieszczanie_ogloszen.slug %}" class="btn btn-primary">Aktualizuj</a>
+                        &nbsp;
+                        <a href="{% url 'ogloszenia:usun' zamieszczanie_ogloszen.slug %}" class="btn btn-danger">Usuń</a>                       
 
                     {% endif %}
                 </ul>

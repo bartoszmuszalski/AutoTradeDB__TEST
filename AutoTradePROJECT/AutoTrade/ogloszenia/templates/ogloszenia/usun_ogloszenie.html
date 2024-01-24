@@ -1,0 +1,45 @@
+<!-- usun_ogloszenie.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<style type="text/css">
+  .delete-form {
+      width: 100%;
+      max-width: 100%;
+      padding: 15px;
+      margin: auto;
+    }
+
+    .submit-button{
+      max-width: 200px;
+    }
+    .cancel-button {
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin-top: 10px;
+      max-width: 200px;
+  }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-7 offset-lg-1">
+            <h3>Czy na pewno chcesz usunąć to ogłoszenie?</h3>
+            <form class="delete-form" method="post">
+                {% csrf_token %}
+                <p>Tytuł: {{ zamieszczanie_ogloszen.tytul }}</p>
+                <p>Opis: {{ zamieszczanie_ogloszen.opis }}</p>
+                <img class="card-img-top" src="{{zamieszczanie_ogloszen.zdjecie.url}}" alt="{{zamieszczanie_ogloszen.tytul}}">
+                <!-- Dodaj więcej pól, które chcesz wyświetlić przed potwierdzeniem usunięcia -->
+
+                <button class="submit-button btn btn-md btn-danger btn-block" type="submit">Potwierdź usunięcie</button>
+                <a href="{% url 'home' %}" class="cancel-button">Anuluj</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

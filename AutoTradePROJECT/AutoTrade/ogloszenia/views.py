@@ -4,6 +4,8 @@ from ogloszenia.models import ZamieszczanieOgloszen
 from ogloszenia.forms import StworzFormularzOgloszenia, ZaaktalizujFormularzOgloszenia
 from account.models import Account
 from django.db.models import Q
+from django.http import HttpResponse
+from django.contrib import messages
 
 def StworzWidokOgloszenia(request):
 
@@ -76,6 +78,27 @@ def EdytujWidokOgloszenia(request, slug):
 
     context['form'] = form
     return render(request, 'ogloszenia/edytuj_ogloszenie.html', context)
+
+def UsunWidokOgloszenia(request, slug):
+    context = {}
+    user = request.user
+
+    if not user.is_authenticated:
+        return redirect('must_authenticate')
+
+    zamieszczanie_ogloszen = get_object_or_404(ZamieszczanieOgloszen, slug=slug)
+
+    if zamieszczanie_ogloszen.autor != user:
+        return HttpResponse('Nie jesteś autorem tego ogłoszenia.')
+
+    if request.method == 'POST':
+        # Jeśli formularz został przesłany
+        zamieszczanie_ogloszen.delete()
+        return redirect('must_authenticate')  # Zmień 'nazwa_twojego_widoku' na odpowiednią nazwę widoku
+
+    context['zamieszczanie_ogloszen'] = zamieszczanie_ogloszen
+    return render(request, 'ogloszenia/usun_ogloszenie.html', context)
+
 
 def get_blog_queryset(query=None):
     queryset = []
