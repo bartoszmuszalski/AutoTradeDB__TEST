@@ -30,6 +30,12 @@ class ZamieszczanieOgloszen(models.Model):
         ('H', 'Hybryda'),
     ]
 
+    STATUS_CHOICES = [
+        ('oczekujace', 'Oczekujące na zatwierdzenie'),
+        ('zatwierdzone', 'Zatwierdzone'),
+    ]
+
+    
     tytul               = models.CharField(max_length=50, null=False, blank=False)
     opis                = models.TextField(max_length=500, null=False, blank=False)
     cena                = models.DecimalField(max_digits=10, decimal_places=2, null=False, blank=False)

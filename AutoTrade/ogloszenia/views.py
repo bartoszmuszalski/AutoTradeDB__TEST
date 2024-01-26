@@ -5,7 +5,6 @@ from ogloszenia.forms import StworzFormularzOgloszenia, ZaaktalizujFormularzOglo
 from account.models import Account
 from django.db.models import Q
 from django.http import HttpResponse
-from django.contrib import messages
 
 def StworzWidokOgloszenia(request):
 
@@ -94,7 +93,7 @@ def UsunWidokOgloszenia(request, slug):
     if request.method == 'POST':
         # Jeśli formularz został przesłany
         zamieszczanie_ogloszen.delete()
-        return redirect('must_authenticate')  # Zmień 'nazwa_twojego_widoku' na odpowiednią nazwę widoku
+        return redirect('must_authenticate')
 
     context['zamieszczanie_ogloszen'] = zamieszczanie_ogloszen
     return render(request, 'ogloszenia/usun_ogloszenie.html', context)

@@ -34,7 +34,6 @@
                 <p>Tytuł: {{ zamieszczanie_ogloszen.tytul }}</p>
                 <p>Opis: {{ zamieszczanie_ogloszen.opis }}</p>
                 <img class="card-img-top" src="{{zamieszczanie_ogloszen.zdjecie.url}}" alt="{{zamieszczanie_ogloszen.tytul}}">
-                <!-- Dodaj więcej pól, które chcesz wyświetlić przed potwierdzeniem usunięcia -->
 
                 <button class="submit-button btn btn-md btn-danger btn-block" type="submit">Potwierdź usunięcie</button>
                 <a href="{% url 'home' %}" class="cancel-button">Anuluj</a>

@@ -13,10 +13,7 @@ def home_screen_view(request):
         query = request.GET['q']
         context['query'] = str(query)
 
-
     #Sortuje od najnowszych
-
-
     zamieszczanie_ogloszen = sorted(get_blog_queryset(query), key=attrgetter('tytul'), reverse=True)
     context['zamieszczanie_ogloszen'] = zamieszczanie_ogloszen
 
